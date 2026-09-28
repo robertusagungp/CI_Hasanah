@@ -68,68 +68,103 @@ export const StoryMode: React.FC<StoryModeProps> = ({ plan, result }) => {
 
       {/* Chapter 2..N: Sequential Life Events */}
       {events.length > 0 ? (
-        events.map((ev, idx) => (
-          <div
-            key={ev.id || idx}
-            className="relative pl-6 sm:pl-8 pb-6 border-l-2 border-brand-200"
-          >
-            <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-brand-700 text-white flex items-center justify-center text-[10px] font-bold">
-              {idx + 2}
-            </div>
+        events.map((ev, idx) => {
+          const isHasanahCash = ev.eventType === 'hasanah_cash';
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black tracking-wider uppercase text-brand-700">
-                  USIA {ev.age} TAHUN (Tahun ke-{ev.year})
-                </span>
-                <StatusBadge
-                  status={ev.remainingProtectionAfter > 0 ? 'active' : 'terminated'}
-                  size="sm"
-                  label={ev.statusText}
-                />
-              </div>
-
-              <div>
-                <h4 className="text-base sm:text-lg font-bold text-slate-900">
-                  {ev.title}
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                  Berdasarkan skenario ini, manfaat yang dapat diterima:
-                </p>
-                <p className="text-2xl sm:text-3xl font-black text-emerald-700 tracking-tight mt-1">
-                  {formatRupiah(ev.payoutAmount)}
-                </p>
-                {ev.payoutBreakdown && (
-                  <p className="text-xs text-emerald-800 font-medium mt-0.5">
-                    {ev.payoutBreakdown}
-                  </p>
+          return (
+            <div
+              key={ev.id || idx}
+              className="relative pl-6 sm:pl-8 pb-6 border-l-2 border-brand-200"
+            >
+              <div
+                className={cn(
+                  'absolute -left-[11px] top-0 w-5 h-5 rounded-full text-white flex items-center justify-center text-[10px] font-bold',
+                  isHasanahCash ? 'bg-amber-600' : 'bg-brand-700'
                 )}
+              >
+                {idx + 2}
               </div>
 
-              {/* Status after this event */}
-              <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                <div>
-                  <span className="text-slate-500 font-medium">
-                    Sisa perlindungan:{' '}
-                  </span>
-                  <span className="font-bold text-slate-900 text-sm">
-                    {formatRupiah(ev.remainingProtectionAfter)}
-                  </span>
+              <div
+                className={cn(
+                  'rounded-2xl border p-5 shadow-xs space-y-4 transition-all',
+                  isHasanahCash
+                    ? 'bg-amber-50/40 border-amber-300 ring-1 ring-amber-200'
+                    : ev.isWarrantyPeriod
+                    ? 'bg-purple-50/30 border-purple-200'
+                    : 'bg-white border-slate-200'
+                )}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-black tracking-wider uppercase text-brand-700">
+                      USIA {ev.age} TAHUN (Tahun ke-{ev.year})
+                    </span>
+                    {ev.isWarrantyPeriod && (
+                      <span className="text-[10px] font-bold text-purple-800 bg-purple-100 px-2 py-0.5 rounded border border-purple-200">
+                        Masa Garansi (Thn 21–30)
+                      </span>
+                    )}
+                  </div>
+                  <StatusBadge
+                    status={ev.remainingProtectionAfter > 0 ? 'active' : 'terminated'}
+                    size="sm"
+                    label={ev.statusText}
+                  />
                 </div>
-                {ev.isWaiverTriggered && (
-                  <span className="font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded-md border border-amber-200">
-                    Pembayaran berikutnya dibebaskan
-                  </span>
-                )}
-              </div>
 
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-700">
-                <span className="font-semibold text-slate-900">Langkah selanjutnya: </span>
-                {ev.whatHappensNext}
+                <div>
+                  <h4 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                    {isHasanahCash && <Gift className="w-5 h-5 text-amber-600" />}
+                    <span>{ev.title}</span>
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    {isHasanahCash
+                      ? 'Seluruh uang yang telah Anda setorkan kembali 100%:'
+                      : 'Berdasarkan skenario ini, manfaat yang dapat diterima:'}
+                  </p>
+                  <p
+                    className={cn(
+                      'text-2xl sm:text-3xl font-black tracking-tight mt-1',
+                      isHasanahCash ? 'text-amber-800' : 'text-emerald-700'
+                    )}
+                  >
+                    {formatRupiah(ev.payoutAmount)}
+                  </p>
+                  {ev.payoutBreakdown && (
+                    <p className="text-xs text-emerald-800 font-medium mt-0.5">
+                      {ev.payoutBreakdown}
+                    </p>
+                  )}
+                </div>
+
+                {/* Status after this event */}
+                <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                  <div>
+                    <span className="text-slate-500 font-medium">
+                      Sisa perlindungan:{' '}
+                    </span>
+                    <span className="font-bold text-slate-900 text-sm">
+                      {formatRupiah(ev.remainingProtectionAfter)}
+                    </span>
+                  </div>
+                  {ev.isWaiverTriggered && (
+                    <span className="font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded-md border border-amber-200">
+                      Pembayaran berikutnya dibebaskan
+                    </span>
+                  )}
+                </div>
+
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-700">
+                  <span className="font-semibold text-slate-900">
+                    Langkah selanjutnya:{' '}
+                  </span>
+                  {ev.whatHappensNext}
+                </div>
               </div>
             </div>
-          </div>
-        ))
+          );
+        })
       ) : (
         /* If no events, healthy until end */
         <div className="relative pl-6 sm:pl-8 pb-6 border-l-2 border-brand-200">
@@ -171,25 +206,27 @@ export const StoryMode: React.FC<StoryModeProps> = ({ plan, result }) => {
               USIA {endAge} TAHUN
             </span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
-              Akhir Periode
+              Akhir Periode ({plan.protectionDurationYears} Tahun)
             </span>
           </div>
 
           <h4 className="text-base font-bold text-slate-900 mb-1">
-            Periode perlindungan {plan.protectionDurationYears} tahun berakhir
+            Periode perlindungan {plan.protectionDurationYears} tahun selesai
           </h4>
 
-          {result.endOfPeriodCashAmount > 0 ? (
-            <div className="mt-3 bg-emerald-50/70 p-4 rounded-xl border border-emerald-200">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900 uppercase">
-                <Gift className="w-4 h-4 text-emerald-600" />
-                <span>Manfaat Tunai di Akhir Periode (Hasanah Cash)</span>
+          {result.hasHasanahCashTriggered ? (
+            <div className="mt-3 bg-amber-50/70 p-4 rounded-xl border border-amber-200">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-amber-900 uppercase">
+                <Gift className="w-4 h-4 text-amber-600" />
+                <span>Pengembalian Iuran Telah Diterima (Hasanah Cash)</span>
               </div>
-              <p className="text-2xl font-black text-emerald-700 mt-1">
+              <p className="text-2xl font-black text-amber-800 mt-1">
                 {formatRupiah(result.endOfPeriodCashAmount)}
               </p>
-              <p className="text-xs text-emerald-800 mt-1">
-                Dana tunai ini dapat Anda terima kembali setelah masa perlindungan selesai sesuai ketentuan produk.
+              <p className="text-xs text-amber-900 mt-1 leading-relaxed">
+                Dana tunai 100% pengembalian pembayaran telah diterima pada Tahun ke-20.
+                {plan.protectionDurationYears > 20 &&
+                  ' Anda telah menikmati Masa Garansi Perlindungan Lanjutan di Tahun 21–30 tanpa biaya iuran.'}
               </p>
             </div>
           ) : (

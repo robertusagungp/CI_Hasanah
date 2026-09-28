@@ -9,7 +9,7 @@ export interface SelectedBenefits {
     enabled: boolean; // Hasanah Booster: 150% multiplier up to age 60
   };
   endOfPeriodCash: {
-    enabled: boolean; // Hasanah Cash: cash return at end of term if criteria met
+    enabled: boolean; // Hasanah Cash: pengembalian 100% iuran di tahun ke-20 jika tidak ada klaim sakit lanjut/meninggal
   };
   futurePaymentWaiver: {
     enabled: boolean; // Payor Syariah: future payments waived
@@ -31,7 +31,8 @@ export type LifeEventType =
   | 'early_ci'
   | 'advanced_ci'
   | 'death'
-  | 'accident_death';
+  | 'accident_death'
+  | 'hasanah_cash';
 
 export interface LifeEvent {
   id: string;
@@ -62,6 +63,7 @@ export interface ProcessedTimelineEvent {
   statusText: string;
   whatHappensNext: string;
   cumulativePaidAtYear: number;
+  isWarrantyPeriod?: boolean;
 }
 
 export interface ScenarioResult {
@@ -73,6 +75,8 @@ export interface ScenarioResult {
   futurePaymentsRequired: 'continue' | 'waived' | 'completed';
   futurePaymentsLabel: string;
   endOfPeriodCashAmount: number;
+  hasHasanahCashTriggered: boolean;
+  hasanahCashYear: number;
   eventsProcessed: ProcessedTimelineEvent[];
   annualEquivalentPayment: number;
   endAge: number;

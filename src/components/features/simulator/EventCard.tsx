@@ -16,6 +16,7 @@ import {
   UserCheck,
   AlertTriangle,
   Heart,
+  Gift,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -30,8 +31,12 @@ export const EventCard: React.FC<EventCardProps> = ({
   onEdit,
   onDelete,
 }) => {
+  const isHasanahCash = event.eventType === 'hasanah_cash';
+
   const getEventIcon = () => {
     switch (event.eventType) {
+      case 'hasanah_cash':
+        return <Gift className="w-5 h-5 text-amber-600" />;
       case 'early_ci':
         return <Activity className="w-5 h-5 text-blue-600" />;
       case 'advanced_ci':
@@ -47,51 +52,77 @@ export const EventCard: React.FC<EventCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-card p-5 sm:p-6 transition-all hover:border-slate-300">
+    <div
+      className={cn(
+        'bg-white rounded-2xl border shadow-card p-5 sm:p-6 transition-all',
+        isHasanahCash
+          ? 'border-amber-300 bg-gradient-to-br from-amber-50/30 via-white to-white ring-1 ring-amber-200'
+          : event.isWarrantyPeriod
+          ? 'border-purple-300 bg-gradient-to-br from-purple-50/20 via-white to-white'
+          : 'border-slate-200 hover:border-slate-300'
+      )}
+    >
       {/* Top Header */}
       <div className="flex items-start justify-between gap-3 pb-3 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+          <div
+            className={cn(
+              'w-10 h-10 rounded-xl flex items-center justify-center shrink-0',
+              isHasanahCash ? 'bg-amber-100' : 'bg-slate-100'
+            )}
+          >
             {getEventIcon()}
           </div>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-bold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200">
                 Tahun ke-{event.year}
               </span>
               <span className="text-xs font-semibold text-slate-500">
                 Usia {event.age} tahun
               </span>
+              {isHasanahCash && (
+                <span className="text-xs font-black text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300">
+                  ★ Pengembalian Dana 100%
+                </span>
+              )}
+              {event.isWarrantyPeriod && (
+                <span className="text-xs font-bold text-purple-800 bg-purple-100 px-2 py-0.5 rounded-md border border-purple-200">
+                  Masa Garansi (Thn 21–30)
+                </span>
+              )}
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 mt-0.5">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 mt-1">
               {event.title}
             </h3>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center gap-1.5">
-          {onEdit && (
-            <button
-              type="button"
-              onClick={() => onEdit(event.year)}
-              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-              title="Ubah kejadian"
-            >
-              <Edit2 className="w-4 h-4" />
-            </button>
-          )}
-          {onDelete && (
-            <button
-              type="button"
-              onClick={() => onDelete(event.year)}
-              className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              title="Hapus kejadian"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          )}
-        </div>
+        {/* Action Buttons: Only for user-added events, not automatic milestone */}
+        {!isHasanahCash && (
+          <div className="flex items-center gap-1.5">
+            {onEdit && (
+              <button
+                type="button"
+                onClick={() => onEdit(event.year)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                title="Ubah kejadian"
+              >
+                <Edit2 className="w-4 h-4" />
+              </button>
+            )}
+            {onDelete && (
+              <button
+                type="button"
+                onClick={() => onDelete(event.year)}
+                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                title="Hapus kejadian"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 4 Core Questions Grid */}
@@ -121,7 +152,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             {formatRupiah(event.payoutAmount)}
           </p>
           <p className="text-xs text-emerald-800/80 font-medium mt-0.5">
-            Manfaat yang dapat diterima
+            {isHasanahCash ? '100% uang iuran kembali tunai' : 'Manfaat yang dapat diterima'}
           </p>
         </div>
 

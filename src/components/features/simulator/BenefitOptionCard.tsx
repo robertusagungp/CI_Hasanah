@@ -289,16 +289,16 @@ export const BenefitOptionCard: React.FC<BenefitOptionCardProps> = ({
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-slate-900 leading-snug">
-                    Manfaat Tunai di Akhir Periode
+                    Manfaat Tunai di Tahun ke-20
                   </h4>
                   <p className="text-[11px] text-slate-400 font-medium">
-                    Hasanah Cash
+                    Hasanah Cash (100% Uang Kembali + Masa Garansi)
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-1.5">
-                <InfoTooltip content="Jika Anda tetap sehat hingga akhir masa perlindungan tanpa klaim tahap lanjut atau meninggal, dana pembayaran yang telah dilakukan dapat diterima kembali." />
+                <InfoTooltip content="Di tahun ke-20, seluruh dana pembayaran Anda dikembalikan utuh 100% jika tidak ada klaim sakit lanjut/meninggal. Setelah itu, di tahun 21–30 Anda bebas iuran dan proteksi tetap aktif (masa garansi)." />
                 <button
                   type="button"
                   onClick={toggleCash}
@@ -324,13 +324,13 @@ export const BenefitOptionCard: React.FC<BenefitOptionCardProps> = ({
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed mb-3">
-              Jika memenuhi ketentuan hingga akhir periode perlindungan, tersedia manfaat tunai berdasarkan pembayaran perlindungan yang telah dilakukan.
+              Pada tahun ke-20, jika tidak mengalami penyakit serius tahap lanjut atau meninggal, terima pengembalian 100% seluruh pembayaran yang telah dilakukan. Perlindungan tetap aktif di tahun 21–30 sebagai masa garansi!
             </p>
           </div>
 
           <div className="pt-3 border-t border-slate-200/60">
             <div className="flex items-center justify-between text-xs bg-white/80 p-2 rounded-lg border border-slate-200/60">
-              <span className="text-slate-500 font-medium">Status manfaat akhir:</span>
+              <span className="text-slate-500 font-medium">Status manfaat:</span>
               <span
                 className={cn(
                   'font-bold',
@@ -340,7 +340,7 @@ export const BenefitOptionCard: React.FC<BenefitOptionCardProps> = ({
                 )}
               >
                 {selectedBenefits.endOfPeriodCash.enabled
-                  ? 'Aktif (Kembali s.d. 100% Pembayaran)'
+                  ? 'Aktif (100% Kembali di Thn 20 + Garansi Thn 21–30)'
                   : 'Tidak Aktif'}
               </span>
             </div>

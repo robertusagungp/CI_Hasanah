@@ -2,7 +2,15 @@
 
 import React from 'react';
 import { LifeEvent, LifeEventType } from '@/engine/types';
-import { Heart, Activity, AlertTriangle, ShieldCheck, UserCheck, PlusCircle } from 'lucide-react';
+import {
+  Heart,
+  Activity,
+  AlertTriangle,
+  ShieldCheck,
+  UserCheck,
+  PlusCircle,
+  Sparkles,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface PresetDefinition {
@@ -17,8 +25,8 @@ export interface PresetDefinition {
 export const SCENARIO_PRESETS: PresetDefinition[] = [
   {
     id: 'healthy_end',
-    name: 'Tetap Sehat sampai Akhir',
-    description: 'Tidak ada klaim hingga akhir masa perlindungan',
+    name: 'Tetap Sehat (100% Uang Kembali Thn 20)',
+    description: 'Di tahun ke-20 seluruh iuran kembali 100%, lanjut masa garansi hingga tahun ke-30',
     icon: ShieldCheck,
     color: 'emerald',
     getEvents: () => [],
@@ -26,7 +34,7 @@ export const SCENARIO_PRESETS: PresetDefinition[] = [
   {
     id: 'early_ci_y5',
     name: 'Penyakit Serius di Tahun ke-5',
-    description: 'Diagnosa tahap awal di tahun ke-5',
+    description: 'Klaim tahap awal thn 5, uang iuran tetap kembali 100% di thn 20',
     icon: Activity,
     color: 'blue',
     getEvents: (age) => [
@@ -39,11 +47,11 @@ export const SCENARIO_PRESETS: PresetDefinition[] = [
     ],
   },
   {
-    id: 'early_to_advanced',
-    name: 'Penyakit Serius Tahap Awal → Tahap Lanjut',
-    description: 'Tahap awal di tahun ke-5, lanjut di tahun ke-12',
-    icon: Heart,
-    color: 'amber',
+    id: 'warranty_claim',
+    name: 'Klaim di Masa Garansi (Thn 24)',
+    description: 'Uang kembali 100% di Thn 20, santunan sakit lanjut tetap cair penuh di Thn 24',
+    icon: Sparkles,
+    color: 'purple',
     getEvents: (age) => [
       {
         id: 'evt-preset-2a',
@@ -53,8 +61,8 @@ export const SCENARIO_PRESETS: PresetDefinition[] = [
       },
       {
         id: 'evt-preset-2b',
-        year: 12,
-        age: age + 12,
+        year: 24,
+        age: age + 24,
         eventType: 'advanced_ci',
       },
     ],

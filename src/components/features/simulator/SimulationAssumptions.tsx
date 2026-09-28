@@ -81,10 +81,10 @@ export const SimulationAssumptions: React.FC = () => {
             <div className="space-y-2">
               <h5 className="font-bold text-slate-800 flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-brand-600" />
-                <span>Manfaat Tunai Akhir (Hasanah Cash)</span>
+                <span>Manfaat Tunai Tahun ke-20 & Masa Garansi (Hasanah Cash)</span>
               </h5>
               <p>
-                Jika peserta tetap sehat hingga akhir masa perlindungan tanpa klaim tahap lanjut atau meninggal dunia, akumulasi pembayaran perlindungan yang telah dilakukan dapat diterima kembali sesuai ketentuan resmi polis.
+                Pada tahun ke-20, jika nasabah tidak mengalami penyakit serius tahap lanjut atau meninggal dunia, nasabah menerima 100% dari seluruh iuran yang telah dibayarkan. Perlindungan tetap berlanjut di tahun ke 21–30 sebagai <strong>Masa Garansi Proteksi Bebas Biaya</strong>, di mana santunan tetap cair penuh jika terjadi risiko meninggal, kecelakaan, ataupun sakit tahap lanjut.
               </p>
             </div>
           </div>

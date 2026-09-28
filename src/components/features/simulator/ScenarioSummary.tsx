@@ -148,6 +148,19 @@ export const ScenarioSummary: React.FC<ScenarioSummaryProps> = ({
             />
           </div>
         </div>
+
+        {/* Highlight for Year 20 Cash Refund */}
+        {result.hasHasanahCashTriggered && (
+          <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs">
+            <div className="flex items-center justify-between text-amber-900 font-bold">
+              <span>Pengembalian Iuran di Thn 20:</span>
+              <span>{formatRupiah(result.endOfPeriodCashAmount)}</span>
+            </div>
+            <p className="text-[11px] text-amber-800 mt-1 leading-snug">
+              100% uang iuran kembali tunai di Tahun ke-20. Proteksi berlanjut di tahun 21–30 sebagai masa garansi tanpa biaya!
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Action: Compare Scenarios Button */}

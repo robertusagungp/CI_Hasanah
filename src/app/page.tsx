@@ -38,14 +38,14 @@ import {
 import { cn } from '@/lib/utils';
 import { formatRupiah, formatRupiahCompact } from '@/lib/currency';
 
-// Initial Demo Configuration specified in prompt
+// Initial Demo Configuration
 const DEFAULT_PLAN: ProtectionPlan = {
   currentAge: 30,
   paymentFrequency: 'yearly',
   paymentAmount: 12_000_000,
   mainProtectionAmount: 1_000_000_000,
   paymentDurationYears: 10,
-  protectionDurationYears: 20,
+  protectionDurationYears: 30, // 30 tahun: mencakup pengembalian dana di Thn 20 dan masa garansi Thn 21–30
   selectedBenefits: {
     earlySeriousIllness: {
       enabled: true,
@@ -72,8 +72,8 @@ const DEFAULT_EVENTS: LifeEvent[] = [
   },
   {
     id: 'evt-default-2',
-    year: 12,
-    age: 42,
+    year: 24,
+    age: 54,
     eventType: 'advanced_ci',
   },
 ];
@@ -84,8 +84,8 @@ function SimulatorContent() {
   // Primary State
   const [plan, setPlan] = useState<ProtectionPlan>(DEFAULT_PLAN);
   const [events, setEvents] = useState<LifeEvent[]>(DEFAULT_EVENTS);
-  const [scenarioName, setScenarioName] = useState<string>('Skenario Contoh');
-  const [activePresetId, setActivePresetId] = useState<string | null>('early_to_advanced');
+  const [scenarioName, setScenarioName] = useState<string>('Klaim di Masa Garansi (Thn 24)');
+  const [activePresetId, setActivePresetId] = useState<string | null>('warranty_claim');
   const [isCustomActive, setIsCustomActive] = useState<boolean>(false);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
@@ -100,10 +100,10 @@ function SimulatorContent() {
   const [savedSlots, setSavedSlots] = useState<SavedScenarioSlot[]>([
     {
       id: 'A',
-      name: 'Tetap Sehat sampai Akhir',
+      name: 'Tetap Sehat (100% Uang Kembali Thn 20)',
       scenario: {
         id: 'slot-a-default',
-        name: 'Tetap Sehat sampai Akhir',
+        name: 'Tetap Sehat (100% Uang Kembali Thn 20)',
         events: [],
       },
     },
@@ -125,10 +125,10 @@ function SimulatorContent() {
     },
     {
       id: 'C',
-      name: 'Tahap Awal → Tahap Lanjut',
+      name: 'Klaim di Masa Garansi (Thn 24)',
       scenario: {
         id: 'slot-c-default',
-        name: 'Tahap Awal → Tahap Lanjut',
+        name: 'Klaim di Masa Garansi (Thn 24)',
         events: [
           {
             id: 'evt-slotc-1',
@@ -138,8 +138,8 @@ function SimulatorContent() {
           },
           {
             id: 'evt-slotc-2',
-            year: 12,
-            age: 42,
+            year: 24,
+            age: 54,
             eventType: 'advanced_ci',
           },
         ],
@@ -224,9 +224,9 @@ function SimulatorContent() {
   const handleReset = () => {
     setPlan(DEFAULT_PLAN);
     setEvents(DEFAULT_EVENTS);
-    setActivePresetId('early_to_advanced');
+    setActivePresetId('warranty_claim');
     setIsCustomActive(false);
-    setScenarioName('Skenario Contoh');
+    setScenarioName('Klaim di Masa Garansi (Thn 24)');
     setSelectedYear(null);
   };
 

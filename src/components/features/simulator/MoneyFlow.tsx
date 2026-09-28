@@ -94,7 +94,7 @@ export const MoneyFlow: React.FC<MoneyFlowProps> = ({ plan, result }) => {
               <div className="flex items-center justify-between text-emerald-900 font-bold bg-emerald-100/70 p-1.5 rounded-lg">
                 <span className="flex items-center gap-1">
                   <Gift className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>Manfaat Tunai Akhir:</span>
+                  <span>Pengembalian Iuran (Thn 20):</span>
                 </span>
                 <span>{formatRupiah(result.endOfPeriodCashAmount)}</span>
               </div>

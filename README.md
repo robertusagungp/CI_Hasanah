@@ -33,7 +33,8 @@ Aplikasi ini menghindari jargon asuransi teknis yang membingungkan:
 | Claim | **Manfaat Diterima** |
 | Waiver of Premium | **Pembayaran Berikutnya Dibebaskan** |
 | Hasanah Booster | **Perlindungan Ekstra hingga Usia 60** *(Hasanah Booster)* |
-| Hasanah Cash | **Manfaat Tunai di Akhir Periode** *(Hasanah Cash)* |
+| Hasanah Cash | **Manfaat Tunai di Tahun ke-20** *(Hasanah Cash - 100% Pengembalian Iuran)* |
+| Masa Garansi | **Masa Garansi Bebas Biaya (Tahun 21–30)** |
 | Payor Syariah | **Pembayaran Berikutnya Dibebaskan** *(Payor Syariah)* |
 
 ---
@@ -125,6 +126,15 @@ export const DEFAULT_PRODUCT_RULES: ProductRuleDefinition = {
   minEntryAge: 18,
   maxEntryAge: 60,
   maxCoverageAge: 85,
+  // Pada tahun ke-20, jika tidak ada klaim meninggal / sakit tahap lanjut,
+  // 100% dari seluruh iuran yang dibayarkan dikembalikan tunai (Hasanah Cash).
+  // Perlindungan tetap berlanjut di tahun 21–30 sebagai masa garansi proteksi:
+  hasanahCashYear20: {
+    enabled: true,
+    triggerYear: 20,
+    refundPercentageOfTotalPaid: 1.0,
+    protectionContinuesIntoWarrantyYears: true,
+  },
   // Santunan kecelakaan memiliki nilai dasar yang sama seperti meninggal/sakit tahap lanjut,
   // ditambah santunan kecelakaan Rp50.000.000 jika usia kejadian < 85 tahun:
   accidentalDeathBenefit: {

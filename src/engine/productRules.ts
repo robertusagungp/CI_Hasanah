@@ -37,17 +37,17 @@ export interface ProductRuleDefinition {
     appliesTo: ('advanced_ci' | 'death' | 'accident_death')[];
   };
 
-  endOfPeriodBenefitHasanahCash: {
+  hasanahCashYear20: {
     enabled: boolean;
-    // VERIFY AGAINST OFFICIAL PRODUCT DOCUMENT BEFORE PRODUCTION USE
-    // Hasanah Cash returns up to 100% of total basic payments if customer reaches end of coverage period
-    refundPercentageOfTotalPaid: number;
-    reducedByPreviousClaims: boolean;
+    // Pada tahun ke-20, jika tidak mengalami penyakit serius tahap lanjut / meninggal,
+    // nasabah menerima 100% dari seluruh iuran yang telah dibayarkan.
+    triggerYear: number; // Tahun ke-20
+    refundPercentageOfTotalPaid: number; // 100% dari seluruh iuran yang telah dibayarkan
+    protectionContinuesIntoWarrantyYears: boolean; // Tahun 21-30 merupakan masa garansi proteksi aktif
   };
 
   futurePaymentWaiverPayor: {
     enabled: boolean;
-    // VERIFY AGAINST OFFICIAL PRODUCT DOCUMENT BEFORE PRODUCTION USE
     // Automatically waives future payments if critical illness is diagnosed during payment term
     activeOnEarlyCI: boolean;
     activeOnAdvancedCI: boolean;
@@ -80,7 +80,6 @@ export const DEFAULT_PRODUCT_RULES: ProductRuleDefinition = {
     enabled: true,
     percentOptions: [25, 50],
     reducesMainProtection: true,
-    // VERIFY AGAINST OFFICIAL PRODUCT DOCUMENT BEFORE PRODUCTION USE
     triggersWaiverIfEnabled: true,
   },
 
@@ -98,10 +97,11 @@ export const DEFAULT_PRODUCT_RULES: ProductRuleDefinition = {
     appliesTo: ['advanced_ci', 'death', 'accident_death'],
   },
 
-  endOfPeriodBenefitHasanahCash: {
+  hasanahCashYear20: {
     enabled: true,
-    refundPercentageOfTotalPaid: 1.0, // 100% of total contributions
-    reducedByPreviousClaims: true,
+    triggerYear: 20, // Tahun ke-20
+    refundPercentageOfTotalPaid: 1.0, // 100% pengembalian seluruh iuran yang telah dibayarkan
+    protectionContinuesIntoWarrantyYears: true, // Tahun 21-30 masa garansi berlanjut
   },
 
   futurePaymentWaiverPayor: {
