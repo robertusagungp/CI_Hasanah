@@ -77,7 +77,7 @@ export const SCENARIO_PRESETS: PresetDefinition[] = [
   {
     id: 'accident_y6',
     name: 'Kecelakaan',
-    description: 'Meninggal karena kecelakaan di tahun ke-6',
+    description: 'Santunan meninggal + tambahan santunan Rp50 jt (< 85 thn)',
     icon: AlertTriangle,
     color: 'red',
     getEvents: (age) => [

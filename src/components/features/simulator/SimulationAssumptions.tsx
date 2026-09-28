@@ -51,10 +51,20 @@ export const SimulationAssumptions: React.FC = () => {
             <div className="space-y-2">
               <h5 className="font-bold text-slate-800 flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-brand-600" />
-                <span>Penyakit Serius Tahap Lanjut (Advanced CI)</span>
+                <span>Penyakit Serius Tahap Lanjut (Advanced CI) & Meninggal Dunia</span>
               </h5>
               <p>
                 Membayarkan 100% dari sisa jumlah perlindungan. Apabila manfaat ekstra (Hasanah Booster) aktif dan kejadian terjadi sebelum usia 60 tahun, ditambahkan ekstra 50% perlindungan. Setelahnya kontrak perlindungan selesai.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <h5 className="font-bold text-slate-800 flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-brand-600" />
+                <span>Meninggal karena Kecelakaan</span>
+              </h5>
+              <p>
+                Memiliki nilai dasar yang sama seperti santunan meninggal ataupun sakit tahap lanjut (100% sisa perlindungan + ekstra booster jika usia ≤ 60 tahun). Jika terjadi pada usia &lt; 85 tahun, keluarga/ahli waris mendapatkan <strong>tambahan santunan kecelakaan sebesar Rp50.000.000</strong>.
               </p>
             </div>
 

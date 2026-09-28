@@ -125,6 +125,14 @@ export const DEFAULT_PRODUCT_RULES: ProductRuleDefinition = {
   minEntryAge: 18,
   maxEntryAge: 60,
   maxCoverageAge: 85,
+  // Santunan kecelakaan memiliki nilai dasar yang sama seperti meninggal/sakit tahap lanjut,
+  // ditambah santunan kecelakaan Rp50.000.000 jika usia kejadian < 85 tahun:
+  accidentalDeathBenefit: {
+    sameBaseAsDeath: true,
+    additionalAccidentBenefitAmount: 50_000_000,
+    maxAgeForAdditionalBenefit: 85,
+    terminatesPolicy: true,
+  },
   ...
 };
 ```

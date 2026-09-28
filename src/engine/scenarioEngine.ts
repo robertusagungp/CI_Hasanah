@@ -163,15 +163,43 @@ export function runScenarioSimulation(
 
       case 'accident_death': {
         title = 'Meninggal karena Kecelakaan';
-        // Accident death pays 200% of sum assured (or remaining + accident coverage)
-        const baseAccident = remainingProtection * rules.deathBenefit.accidentMultiplier;
-        payout = baseAccident;
-        payoutBreakdown = `Manfaat duka karena kecelakaan (200% sisa perlindungan)`;
+        // Nilai dasar sama seperti santunan meninggal ataupun sakit tahap lanjut
+        const isBoosterActive =
+          plan.selectedBenefits.extraProtectionAge60.enabled &&
+          ageAtYear <= rules.extraProtectionHasanahBooster.maximumAge;
+
+        let boosterAmount = 0;
+        if (isBoosterActive) {
+          boosterAmount = plan.mainProtectionAmount * (rules.extraProtectionHasanahBooster.multiplier - 1.0);
+        }
+
+        const basePayout = remainingProtection + boosterAmount;
+
+        // Tambahan santunan Rp50.000.000 jika meninggal karena kecelakaan pada umur < 85 tahun
+        const isEligibleForAccidentBonus = ageAtYear < rules.accidentalDeathBenefit.maxAgeForAdditionalBenefit;
+        const additionalAccidentAmount = isEligibleForAccidentBonus
+          ? rules.accidentalDeathBenefit.additionalAccidentBenefitAmount
+          : 0;
+
+        payout = basePayout + additionalAccidentAmount;
+
+        if (isBoosterActive && isEligibleForAccidentBonus) {
+          payoutBreakdown = `Sisa perlindungan + Ekstra Booster (< 60 th) + Tambahan Santunan Kecelakaan Rp50 jt (< 85 th)`;
+        } else if (isEligibleForAccidentBonus) {
+          payoutBreakdown = `100% sisa perlindungan + Tambahan Santunan Kecelakaan Rp50 jt (< 85 th)`;
+        } else if (isBoosterActive) {
+          payoutBreakdown = `Sisa perlindungan + Ekstra Booster (< 60 th)`;
+        } else {
+          payoutBreakdown = `100% sisa jumlah perlindungan`;
+        }
+
         benefitsReceived += payout;
         remainingProtection = 0;
         policyTerminated = true;
         statusText = 'Perlindungan Selesai';
-        whatHappensNext = 'Santunan kecelakaan diserahkan kepada keluarga/ahli waris dan perlindungan selesai.';
+        whatHappensNext = isEligibleForAccidentBonus
+          ? 'Santunan duka beserta tambahan santunan kecelakaan Rp50.000.000 diserahkan kepada keluarga/ahli waris dan perlindungan selesai.'
+          : 'Santunan duka kecelakaan diserahkan kepada keluarga/ahli waris dan perlindungan selesai.';
         break;
       }
     }

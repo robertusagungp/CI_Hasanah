@@ -34,7 +34,7 @@ export interface ProductRuleDefinition {
     enabled: boolean;
     multiplier: number; // e.g. 1.5x (150% of main protection)
     maximumAge: number; // up to age 60
-    appliesTo: ('advanced_ci' | 'death')[];
+    appliesTo: ('advanced_ci' | 'death' | 'accident_death')[];
   };
 
   endOfPeriodBenefitHasanahCash: {
@@ -55,7 +55,15 @@ export interface ProductRuleDefinition {
 
   deathBenefit: {
     payoutPercentageOfRemaining: number;
-    accidentMultiplier: number; // e.g. 2x for accidental death
+    terminatesPolicy: boolean;
+  };
+
+  accidentalDeathBenefit: {
+    // Memiliki nilai dasar yang sama seperti santunan meninggal ataupun sakit tahap lanjut
+    sameBaseAsDeath: boolean;
+    // Tambahan santunan kecelakaan Rp50.000.000 jika umur < 85 tahun
+    additionalAccidentBenefitAmount: number;
+    maxAgeForAdditionalBenefit: number; // < 85 tahun
     terminatesPolicy: boolean;
   };
 }
@@ -87,7 +95,7 @@ export const DEFAULT_PRODUCT_RULES: ProductRuleDefinition = {
     enabled: true,
     multiplier: 1.5, // 150% of main protection amount
     maximumAge: 60,
-    appliesTo: ['advanced_ci', 'death'],
+    appliesTo: ['advanced_ci', 'death', 'accident_death'],
   },
 
   endOfPeriodBenefitHasanahCash: {
@@ -104,7 +112,13 @@ export const DEFAULT_PRODUCT_RULES: ProductRuleDefinition = {
 
   deathBenefit: {
     payoutPercentageOfRemaining: 1.0,
-    accidentMultiplier: 2.0, // 200% for accident death
+    terminatesPolicy: true,
+  },
+
+  accidentalDeathBenefit: {
+    sameBaseAsDeath: true,
+    additionalAccidentBenefitAmount: 50_000_000, // Tambahan Rp50 jt jika < 85 tahun
+    maxAgeForAdditionalBenefit: 85,
     terminatesPolicy: true,
   },
 };

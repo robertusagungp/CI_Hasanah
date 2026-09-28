@@ -79,7 +79,7 @@ export const LifeEventModal: React.FC<LifeEventModalProps> = ({
     {
       type: 'accident_death',
       label: 'Meninggal karena Kecelakaan',
-      sublabel: 'Santunan kecelakaan tambahan hingga 200%',
+      sublabel: 'Santunan sama dengan meninggal dunia + tambahan santunan Rp50 jt (usia < 85 thn)',
       icon: AlertTriangle,
       color: 'bg-red-50 text-red-600',
       borderActive: 'border-red-500 bg-red-50/40',
